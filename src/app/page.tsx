@@ -1,41 +1,74 @@
+"use client";
+import React, { useEffect, useState } from "react";
 import Navber from "@/Components/Navber";
-import React from "react";
 
-const page = () => {
+const GalleryPage = () => {
+  const [images, setImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("galleryImages");
+    if (stored) setImages(JSON.parse(stored));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("galleryImages", JSON.stringify(images));
+  }, [images]);
+
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImages((prev) => [...prev, reader.result as string]);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue-50 via-white to-indigo-50">
-      {/* Navbar */}
       <Navber />
-
-      {/* Hero Section */}
-      <div className="flex-grow flex justify-center items-center">
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <h1 className="text-5xl font-extrabold text-indigo-700 mb-4 drop-shadow-md">
-            Welcome to the <span className="text-blue-500">Image Gallery</span>
+      <div className="flex-grow px-6 py-10 max-w-6xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-bold text-indigo-700">
+            Image <span className="text-blue-500">Gallery</span>
           </h1>
-          <p className="text-lg text-gray-600 mb-8">
-            Discover, explore and enjoy a wide collection of beautiful images
-            curated just for you.
-          </p>
 
-          {/* Button Group */}
-          <div className="flex justify-center gap-6">
-            <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-indigo-700 transition cursor-pointer">
-              Explore Gallery
-            </button>
-            <button className="border border-indigo-600 text-indigo-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-indigo-50 transition cursor-pointer">
-              Learn More
-            </button>
-          </div>
+          <label className="bg-indigo-600 text-white px-5 py-2 rounded-lg shadow cursor-pointer">
+            Upload
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleUpload}
+            />
+          </label>
+        </div>
+
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {/* Default images */}
+          <img
+            src="https://source.unsplash.com/random/400x300?nature"
+            className="rounded-lg shadow"
+          />
+          <img
+            src="https://source.unsplash.com/random/400x300?forest"
+            className="rounded-lg shadow"
+          />
+          <img
+            src="https://source.unsplash.com/random/400x300?river"
+            className="rounded-lg shadow"
+          />
+
+          {/* Uploaded */}
+          {images.map((img, idx) => (
+            <img key={idx} src={img} className="rounded-lg shadow" />
+          ))}
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="bg-indigo-600 py-4 text-center text-sm text-white">
-        © {new Date().getFullYear()} Image Gallery | All Rights Reserved
-      </footer>
     </div>
   );
 };
 
-export default page;
+export default GalleryPage;
