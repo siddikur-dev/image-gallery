@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+
 import { useRouter, useSearchParams } from "next/navigation";
 
 const InputSearch = () => {
@@ -37,6 +38,7 @@ const InputSearch = () => {
       >
         Search
       </button>
+      
     </form>
   );
 };

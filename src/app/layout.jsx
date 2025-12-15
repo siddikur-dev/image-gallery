@@ -1,9 +1,8 @@
-
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import CartProvider from "@/context/CartProvider";
-import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
+import { Button } from "@/components/ui/button";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +30,16 @@ export default function RootLayout({ children }) {
             <h2 className="text-3xl text-cyan-600">Smart Kitchen 🔪</h2>
           </Link>
           <div>
-            <Link href="/foods" className="mr-4 btn">
-              Foods
-            </Link>
-            <Link href="/review" className="mr-4 btn">
-              Review
-            </Link>
-            <ThemeToggle></ThemeToggle>
+            <Button variant="outline">
+              <Link href="/foods" className="mr-4 ">
+                Foods
+              </Link>
+            </Button>
+            <Button variant="outline">
+              <Link href="/review" className="mr-4 ">
+                Review
+              </Link>
+            </Button>
           </div>
         </header>
         <CartProvider>{children}</CartProvider>
