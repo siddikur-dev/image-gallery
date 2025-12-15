@@ -1,7 +1,9 @@
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import CartProvider from "@/context/CartProvider";
+import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +37,7 @@ export default function RootLayout({ children }) {
             <Link href="/review" className="mr-4 btn">
               Review
             </Link>
+            <ThemeToggle></ThemeToggle>
           </div>
         </header>
         <CartProvider>{children}</CartProvider>

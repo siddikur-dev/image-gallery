@@ -18,7 +18,7 @@ const InputSearch = () => {
       params.delete("search");
     }
 
-    router.push(`?${params.toString()}`);
+    router.push(`?search=${params.toString()}`);
   };
 
   return (
