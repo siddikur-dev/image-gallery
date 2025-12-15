@@ -1,21 +1,23 @@
-'use client";';
+
 import FoodCard from "@/components/cards/foodsCard";
 import React, { use } from "react";
 import CartItems from "./cartItems";
-import { CartContext } from "@/context/CartProvider";
-const foodsData = async () => {
+import InputSearch from "@/components/InputSearch";
+const foodsData = async (search) => {
   const res = await fetch(
-    " https://taxi-kitchen-api.vercel.app/api/v1/foods/random"
+    `https://taxi-kitchen-api.vercel.app/api/v1/foods/random?search=${search}`
   );
   const data = await res.json();
   await new Promise((resolve) => setTimeout(resolve, 2500));
   return data.foods || [];
 };
 
-const FoodsPage = async () => {
-  const foods = await foodsData();
+const FoodsPage = async ({ searchParams }) => {
+  const { search = "" } = await searchParams;
+  const foods = await foodsData(search);
   return (
     <div className="container mx-auto">
+      <InputSearch></InputSearch>
       <h2 className="text-center text-2xl text-amber-300">
         {" "}
         Total {foods.length} Foods Found
@@ -28,10 +30,7 @@ const FoodsPage = async () => {
         </div>
         <div className="w-72 p-4 border border-gray-300 rounded-lg h-screen">
           {/* Sidebar content can go here */}
-          <h2 className="text-3xl">
-            {" "}
-            Cart Items 
-          </h2>
+          <h2 className="text-3xl"> Cart Items</h2>
           <hr />
           <CartItems></CartItems>
         </div>
