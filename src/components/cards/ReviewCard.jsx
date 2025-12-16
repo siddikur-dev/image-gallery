@@ -1,13 +1,25 @@
+import { Nata_Sans } from "next/font/google";
+import Image from "next/image";
 import React from "react";
 
-const ReviewCard = ({review}) => {
-    const { user, photo, rating, review: text, likes, date } = review;
+// nato sans font
+const nato = Nata_Sans({
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const ReviewCard = ({ review }) => {
+  const { user, photo, rating, review: text, likes, date } = review;
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-5 space-y-4">
+    <div
+      className={`bg-white rounded-2xl shadow-md p-5 space-y-4 ${nato.className}`}
+    >
       {/* User Info */}
       <div className="flex items-center gap-4">
-        <img
+        <Image
+          width={12}
+          height={12}
           src={photo}
           alt={user}
           className="w-12 h-12 rounded-full object-cover"
