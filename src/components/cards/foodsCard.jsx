@@ -1,13 +1,20 @@
 import Link from "next/link";
 import CartButton from "../buttons/CartButton";
+import Image from "next/image";
 
 const FoodCard = ({ food }) => {
   const { title, foodImg, price, category, id } = food;
 
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
-      <img src={foodImg} alt={title} className="w-full h-48 object-cover" />
-
+      {/* <img src={foodImg} alt={title} className="w-full h-48 object-cover" /> */}
+      <Image
+        src={foodImg}
+        alt={title}
+        className="w-full h-48 object-cover"
+        width={500}
+        height={500}
+      ></Image>
       <div className="p-4 space-y-2">
         <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
 
