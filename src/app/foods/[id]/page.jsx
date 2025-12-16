@@ -11,6 +11,31 @@ const getFoodDetails = async (id) => {
   return res.json();
 };
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+
+  const res = await getFoodDetails(id);
+  const food = await res.details;
+  return {
+    title: food.title,
+    description: `${food.title} is a ${food.category} dish from ${food.area}. Price ${food.price}৳.`,
+    keywords: [
+      food.title,
+      food.category,
+      food.area,
+      "food",
+      "recipe",
+      "meal",
+      "vegetarian food",
+    ],
+    openGraph: {
+      title: food.title,
+      description: `${food.category} food from ${food.area}`,
+      images: [food.foodImg],
+    },
+  };
+}
+
 export default async function FoodDetailsPage({ params }) {
   const { id } = await params;
   const data = await getFoodDetails(id);
@@ -32,17 +57,17 @@ export default async function FoodDetailsPage({ params }) {
 
         {/* Details */}
         <div className="space-y-4">
-          <h1 className="text-3xl font-bold text-gray-300">{title}</h1>
+          <h1 className="text-3xl font-bold ">{title}</h1>
 
-          <p className="text-gray-200">
+          <p className="text-gray-700">
             <span className="font-semibold">Category:</span> {category}
           </p>
 
-          <p className="text-gray-200">
+          <p className="text-gray-700">
             <span className="font-semibold">Area:</span> {area}
           </p>
 
-          <p className="text-2xl font-semibold text-gray-300">৳ {price}</p>
+          <p className="text-2xl font-semibold ">৳ {price}</p>
 
           <div className="flex gap-4 pt-4">
             <button className="bg-cyan-700 hover:bg-cyan-800 text-white px-6 py-3 rounded-xl transition">
@@ -53,7 +78,7 @@ export default async function FoodDetailsPage({ params }) {
               href={video}
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-gray-300 text-gray-300 px-6 py-3 rounded-xl hover:bg-gray-300 hover:text-white transition"
+              className="border border-gray-300  px-6 py-3 rounded-xl hover:bg-gray-300 hover:text-white transition"
             >
               Watch Video
             </a>
